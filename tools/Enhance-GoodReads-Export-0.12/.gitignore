@@ -1,0 +1,9 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+/stuff
+/env
+__pycache__/
+/dist
+/build
+/.mypy_cache
+# IDE files
+/.idea

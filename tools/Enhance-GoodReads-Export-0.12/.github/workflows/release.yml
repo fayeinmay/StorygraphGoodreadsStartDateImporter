@@ -1,0 +1,28 @@
+name: Handle Release
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  generate:
+    name: Create release-artifacts
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/requirements-dev.txt
+      - name: Package exe
+        run: |
+          pyinstaller -F --noconsole .\enhance_export_gui.py
+      - name: Upload files to a GitHub release
+        uses: svenstaro/upload-release-action@2.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: 'dist/*.exe'
+          tag: ${{ github.ref }}
+          file_glob: true

@@ -1,0 +1,33 @@
+1. Go to https://app.thestorygraph.com/books-read/YOURACCOUNT
+2. Scroll all the way down to load all objects.
+3. execute in console:
+
+{
+let els = document.querySelectorAll("a[href^='/edit-read-instance']");
+let books = []
+
+for(let i = 0; i < els.length; i += 2) {
+let title = document.getElementsByClassName("book-title-author-and-series")[i].querySelector("h3 > a").text
+let url = new URL(els[i].href)
+let params = new URLSearchParams(url.search);
+let book_id = params.get('book_id');
+let read_instance_id = params.get('read_instance_id');
+
+let book = {}
+book.title = title;
+book.book_id = book_id;
+book.read_instance_id = read_instance_id;
+books.push(book)
+}
+console.log(JSON.stringify(books))
+}
+
+4. Copy output (everything inside [] brackets)
+5. Paste into storygraph.json
+
+---
+
+1. Go to https://www.goodreads.com/review/import
+2. Create export and download csv file
+3. Enhance export with https://github.com/PaulKlinger/Enhance-GoodReads-Export
+4. Paste into goodreads_library_export.csv
